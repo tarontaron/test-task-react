@@ -44,41 +44,57 @@ export class Story extends PureComponent {
     const { story } = this.props;
 
     return (
-      <div className="story">
-        <div className="icon">
-          <img
-            src={this.isTweet ? story.author_image_url : story.domain_cached_logo_url}
-            alt="Logo"
-          />
-        </div>
-        <div className="info">
-          <h3 className="title">
-            {story.title}
-          </h3>
-          <div className="domain">
-            <div className="domain-name">
-              {this.isTweet && (
-                <Fragment>
-                  <i className="fab fa-twitter twitter-icon" />
-                  @
+      <Fragment>
+        <div className="story">
+          <div className="icon">
+            <img
+              src={this.isTweet ? story.author_image_url : story.domain_cached_logo_url}
+              alt="Logo"
+            />
+          </div>
+          <div className="info">
+            <h3 className="title">
+              {story.title}
+            </h3>
+            <div className="domain">
+              <div className="domain-name">
+                {this.isTweet && (
+                  <Fragment>
+                    <i className="fab fa-twitter twitter-icon" />
+                    @
                 </Fragment>
-              )}
-              {this.isTweet ? story.author_screen_name : story.domain_name}
-            </div>
-            <div className="publish-time">
-              {this.publishTimeDifference()}
+                )}
+                {this.isTweet ? story.author_screen_name : story.domain_name}
+              </div>
+              <div className="publish-time">
+                {this.publishTimeDifference()}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="score-wrapper">
-          <div className="score">
-            {story.score} %
+          <div className="score-wrapper">
+            <div className="score">
+              {story.score} %
+          </div>
+          </div>
+          <div className="expand">
+            <i className={`fas fa-angle-${this.state.opened ? 'up' : 'down'}`} onClick={this.toggleStory} />
           </div>
         </div>
-        <div className="expand">
-          <i className={`fas fa-angle-${this.state.opened ? 'up' : 'down'}`} onClick={this.toggleStory} />
-        </div>
-      </div>
+        {this.state.opened && <div className="story story-info">
+          <div>
+            <i className="far fa-bookmark"></i>
+            <div>Bookmark</div>
+          </div>
+          <div>
+            <i className="fa fa-thumbs-up"></i>
+            <div>Like</div>
+            </div>
+          <div>
+            <i className="fa fa-thumbs-down"></i>
+            <div>Dislike</div>
+          </div>
+        </div>}
+      </Fragment>
     );
   }
 }
