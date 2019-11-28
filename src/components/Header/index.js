@@ -26,6 +26,7 @@ export class Header extends PureComponent {
     return (
       <Fragment>
         <header className="header">
+          <i className="fas fa-bars bar-menu-icon"></i>
           <img src={logo} alt="Logo" className="logo"/>
           <div className={`user-info${this.state.opened ? ' active' : ''}`} onClick={this.openLogOut}>
             <img src={userIcon} alt="User Icon" className="user-icon"/>
