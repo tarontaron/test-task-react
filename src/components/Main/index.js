@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import autoBind from 'react-autobind';
 import Header from '../Header';
 import Content from '../Content';
-import { getStories } from '../../services/StoriesSvc';
+import { getStories } from '../../services/storiesSvc';
 
 import './styles.scss';
 

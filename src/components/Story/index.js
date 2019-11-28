@@ -40,11 +40,20 @@ export class Story extends PureComponent {
     );
   }
 
+  getFollowers() {
+    const { author_followers_count: followersCount } = this.props.story;
+
+    if (followersCount > 999999999) return `${Math.floor(followersCount / 1000000000)}B`;
+    if (followersCount > 999999) return `${Math.floor(followersCount / 1000000)}M`;
+    if (followersCount > 999) return `${Math.floor(followersCount / 1000)}K`;
+    return followersCount;
+  }
+
   render() {
     const { story } = this.props;
 
     return (
-      <Fragment>
+      <div className="story-wrapper">
         <div className="story">
           <div className="icon">
             <img
@@ -62,14 +71,24 @@ export class Story extends PureComponent {
                   <Fragment>
                     <i className="fab fa-twitter twitter-icon" />
                     @
-                </Fragment>
+                  </Fragment>
                 )}
                 {this.isTweet ? story.author_screen_name : story.domain_name}
               </div>
               <div className="publish-time">
                 {this.publishTimeDifference()}
               </div>
+              {this.isTweet && this.state.opened && (
+                <div className="followers">
+                  follower / ing ratio: {this.getFollowers()}
+                </div>
+              )}
             </div>
+            {this.state.opened && (
+              <div className="description">
+                {story.description}
+              </div>
+            )}
           </div>
           <div className="score-wrapper">
             <div className="score">
@@ -79,22 +98,28 @@ export class Story extends PureComponent {
           <div className="expand">
             <i className={`fas fa-angle-${this.state.opened ? 'up' : 'down'}`} onClick={this.toggleStory} />
           </div>
+          <div className="mobile-expand" onClick={this.toggleStory}>
+            {this.state.opened ? 'Less' : 'More'}
+            <i className={`fas fa-angle-${this.state.opened ? 'up' : 'down'}`} />
+          </div>
         </div>
-        {this.state.opened && <div className="story story-info">
-          <div>
-            <i className="far fa-bookmark"></i>
-            <div>Bookmark</div>
-          </div>
-          <div>
-            <i className="fa fa-thumbs-up"></i>
-            <div>Like</div>
+        {this.state.opened && (
+          <div className="story-footer">
+            <div className="action-button">
+              <i className="far fa-bookmark icon" />
+              <div className="title">Bookmark</div>
             </div>
-          <div>
-            <i className="fa fa-thumbs-down"></i>
-            <div>Dislike</div>
+            <div className="action-button">
+              <i className="fa fa-thumbs-up icon" />
+              <div className="title">Like</div>
+            </div>
+            <div className="action-button">
+              <i className="fa fa-thumbs-down icon" />
+              <div className="title">Dislike</div>
+            </div>
           </div>
-        </div>}
-      </Fragment>
+        )}
+      </div>
     );
   }
 }
